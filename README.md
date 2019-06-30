@@ -15,6 +15,7 @@ To run the code in this repo you will need access to an environment (such as Pap
 - **2014_2018_df_cleaned_keep_bad_loc_geocoded_SCtrimmed_apr26.pkl** pickled dataframe with cleanup from streetcar_data_preparation.ipynb applied and latitude and longitude added for Location values (results of calling Geocoding API in streetcar_data_preparation-geocode.ipynb)
 
 ## Code
+- **chapter2.ipynb** code snippets associated with introductory code in chapter 2
 - **streetcar_data_preparation.ipynb** load original dataset into a single dataframe and perform basic cleanup on values. By default takes 2014_2018.pkl as input
 - **streetcar_data_exploration.ipynb** basic data exploration
 - **streetcar_time_series.ipynb** additional data exploration using time series forecasting techniques
