@@ -1,6 +1,14 @@
 # manning
 repo for Manning book Deep Learning with Structured Data
 
+## Note about  the current state of the code and upcoming improvements
+The code is being updated as the text of the book evolves. Here are some recommended improvements to the code that will be incorporated in future updates (post this review cycle):
+- clean up variable names
+- consider packaging with Docker to make exercising the code easier
+- consider including a random forest treatment of the problem to contrast with the performance and complexity of the DL solution
+- use Pandas chaining to make code cleaner
+- use regex in cleanup of locations
+
 ## Prequisites
 To run the code in this repo you will need access to an environment (such as Paperspace https://www.paperspace.com/ or Watson Studio Cloud https://cloud.ibm.com/catalog/services/watson-studio ) that supports Jupyter notebooks.
 
