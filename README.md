@@ -29,6 +29,7 @@ To run the code in this repo you will need access to an environment (such as Pap
 - **streetcar_time_series.ipynb** additional data exploration using time series forecasting techniques
 - **streetcar_data_preparation-geocode-public.ipynb** use Google Geocoding API to get latitude and longitude values from Location values. NOTE: to run the code in this file, you will need to get your own API Key from Google Cloud Platform https://developers.google.com/maps/documentation/embed/get-api-key
 - **streetcar_DL_train-trimmed.ipynb** train Keras deep learning model. By default takes 2014_2018_df_cleaned_keep_bad_loc_geocoded_SCtrimmed_apr26.pkl as input
+- **streetcar_DL_refactored.ipynb** train Keras deep learning model using refactored dataset. Create dataframe with entries for every date, hour, route, direction combination since Jan 1 2014. Join with dataframe containing the original dataset and generate target column that is 1 if there was a delay in that date / hour / route / direction combination and 0 otherwise. Use this refactored dataset to train Keras model. Focusing on this approach based on feedback received from presentation on this project at AI Beijing conference https://ai.oreilly.com.cn/ai-cn/public/schedule/detail/75461?locale=en
 
 **NOTE:** All code assumes that datasets (raw or pickled) are in a directory called "data" that is a sibling of the directory containing the notebook.  
 
