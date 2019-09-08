@@ -17,12 +17,19 @@ To run the code in this repo you will need access to an environment (such as Pap
 - **https://www.toronto.ca/city-government/data-research-maps/open-data/open-data-catalogue/#e8f359f0-2f47-3058-bf64-6ec488de52da** original dataset
 - **https://www.kaggle.com/knowledgegrappler/a-simple-nn-solution-with-keras-0-48611-pl** Kaggle submission that was used as input to creation of the Keras model used in this example
 
-## Intermediate datasets
+## Directory structure
+- **CSV_XLS** CSV and XLS data
+- **pickled_pandas_dataframes** pickled versions on intermediate Pandas dataframes. See the **Intermediate datasets** section below for details
+- **sql** files related to the section in Chapter 5 about how to perform standard SQL operations in Pandas
+- root directory contains notebook files for the code examples in the book - see the **Code** section below for details
+
+## Intermediate datasets (in pickled_pandas_dataframes directory)
 - **2014_2018.pkl** pickled dataframe containing data from the original dataset 2014 to November 2018
 - **2014_2018_df_cleaned_keep_bad_loc_geocoded_SCtrimmed_apr26.pkl** pickled dataframe with cleanup from streetcar_data_preparation.ipynb applied and latitude and longitude added for Location values (results of calling Geocoding API in streetcar_data_preparation-geocode.ipynb)
 
 ## Code
 - **chapter2.ipynb** code snippets associated with introductory code in chapter 2
+- **chapter5.ipynb** code snippets associated with SQL / Pandas examples
 - **streetcar_data_preparation.ipynb** load original dataset into a single dataframe and perform basic cleanup on values. By default takes 2014_2018.pkl as input
 - **streetcar_data_exploration.ipynb** basic data exploration
 - **streetcar_time_series.ipynb** additional data exploration using time series forecasting techniques
