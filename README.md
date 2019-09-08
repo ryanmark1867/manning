@@ -1,5 +1,5 @@
 # manning
-repo for Manning book Deep Learning with Structured Data
+repo for Manning book **Deep Learning with Structured Data** https://www.manning.com/books/deep-learning-with-structured-data
 
 ## Note about  the current state of the code and upcoming improvements
 The code is being updated as the text of the book evolves. Here are some recommended improvements to the code that will be incorporated in future updates (post this review cycle):
