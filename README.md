@@ -14,7 +14,7 @@ To run the code in this repo you will need access to an environment (such as Pap
 
 ## Background
 
-- **https://www.toronto.ca/city-government/data-research-maps/open-data/open-data-catalogue/#e8f359f0-2f47-3058-bf64-6ec488de52da** original dataset
+- **https://open.toronto.ca/dataset/ttc-streetcar-delay-data/** original dataset
 - **https://www.kaggle.com/knowledgegrappler/a-simple-nn-solution-with-keras-0-48611-pl** Kaggle submission that was used as input to creation of the Keras model used in this example
 
 ## Directory structure
