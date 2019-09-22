@@ -30,7 +30,7 @@ To run the code in this repo you will need access to an environment (such as Pap
 ## Code
 - **chapter2.ipynb** code snippets associated with introductory code in chapter 2
 - **chapter5.ipynb** code snippets associated with SQL / Pandas examples
-- **streetcar_data_preparation.ipynb** load original dataset into a single dataframe and perform basic cleanup on values. By default takes 2014_2018.pkl as input
+- **streetcar_data_preparation_refactored.ipynb** load original dataset into a single dataframe and perform basic cleanup on values. By default takes 2014_2019_upto_june.pkl as input
 - **streetcar_data_exploration.ipynb** basic data exploration
 - **streetcar_time_series.ipynb** additional data exploration using time series forecasting techniques
 - **streetcar_data_preparation-geocode-public.ipynb** use Google Geocoding API to get latitude and longitude values from Location values. NOTE: to run the code in this file, you will need to get your own API Key from Google Cloud Platform https://developers.google.com/maps/documentation/embed/get-api-key
