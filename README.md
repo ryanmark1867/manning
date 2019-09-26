@@ -42,7 +42,7 @@ To run the code in this repo you will need access to an environment (such as Pap
 
 ## To re-run the entire flow from scratch:
 1. copy all the XLS files from the original dataset (https://www.toronto.ca/city-government/data-research-maps/open-data/open-data-catalogue/#e8f359f0-2f47-3058-bf64-6ec488de52da) into a directory called "data" that is a sibling to the directory containing your notebook files
-2. run streetcar_data_preparation.ipynb with the following updates: 
+2. streetcar_data_preparation_refactored.ipynb with the following updates: 
 - load_from_scratch set to  True
 - pickled_output_dataframe set to the name you want for the output pickle file containing the cleansed dataframe
 3. run streetcar_data_preparation-geocode-public.ipynb with the following updates:
