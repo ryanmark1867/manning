@@ -30,6 +30,13 @@
 
 # common import block
 # common imports
+from typing import Any, Text, Dict, List
+#
+from rasa_sdk import Action, Tracker
+from rasa_sdk.executor import CollectingDispatcher
+
+
+
 import zipfile
 import pandas as pd
 import numpy as np
@@ -73,9 +80,10 @@ from sklearn import metrics
 # main code block
 
 # 'https://raw.githubusercontent.com/ryanmark1867/chatbot/master/datasets/links_small.csv'
+# "https://github.com/ryanmark1867/chatbot/raw/master/images/thumb_up.jpg"
 # https://github.com/ryanmark1867/manning/blob/master/models/scmodeldec1.h5
 
-# model_path = "https://raw.githubusercontent.com/ryanmark1867/manning/master/models/scmodeldec1.h5"
+# model_path = "https://github.com/ryanmark1867/manning/raw/master/models/scmodeldec1.h5"
 model_path = 'C:\personal\chatbot_july_2019\keras_models\scmodeldec1.h5'
 
 loaded_model = load_model(model_path)
@@ -101,3 +109,21 @@ print("pred is ",preds)
 
 print("preds[0] is ",preds[0])
 print("preds[0][0] is ",preds[0][0])
+
+
+class ActionPredictDelay(Action):
+
+    def name(self) -> Text:
+        return "action_predict_delay"
+
+    def run(self, dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+        dispatcher.utter_message("in action_predict_delay")
+        if preds[0][0] >= 0.5:
+            predict_string = "yes"
+        else:
+            predict_string = "no"
+        dispatcher.utter_message("Delay prediction is:"+predict_string)
+
+        return []
