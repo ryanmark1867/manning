@@ -76,6 +76,14 @@ from keras.preprocessing.text import Tokenizer
 from keras.preprocessing.sequence import pad_sequences
 from keras.models import load_model
 from sklearn import metrics
+from sklearn.datasets.samples_generator import make_blobs
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import accuracy_score
+from pickle import load
+from custom_classes import encode_categorical
+from custom_classes import prep_for_keras_input
+from custom_classes import fill_empty
+from custom_classes import encode_text
 
 # main code block
 
@@ -85,9 +93,15 @@ from sklearn import metrics
 
 # model_path = "https://github.com/ryanmark1867/manning/raw/master/models/scmodeldec1.h5"
 model_path = 'C:\personal\chatbot_july_2019\keras_models\scmodeldec1.h5'
+pipeline2_path = 'C:\personal\chatbot_july_2019\streetcar_1\pipelines\sc_delay_pipeline_keras_prep_dec27b.pkl'
+
+pipeline1_path = 'C:\personal\chatbot_july_2019\streetcar_1\pipelines\sc_delay_pipeline_dec27b.pkl'
+prepped_data_path = 'C:\personal\chatbot_july_2019\streetcar_1\input_sample_data\prepped_dec27.csv'
 
 loaded_model = load_model(model_path)
 loaded_model.summary()
+pipeline1 = load(open(pipeline1_path, 'rb'))
+pipeline2 = load(open(pipeline2_path, 'rb'))
 BATCH_SIZE = 1000
 
 # brute force a scoring sample, bagged from test set
@@ -109,6 +123,20 @@ print("pred is ",preds)
 
 print("preds[0] is ",preds[0])
 print("preds[0][0] is ",preds[0][0])
+
+# example using pipeline on prepped data
+# routedirection_frame = pd.read_csv(path+"routedirection.csv")
+prepped_pd = pd.read_csv(prepped_data_path)
+print("prepped_pd is",str(prepped_pd))
+prepped_xform1 = pipeline1.transform(prepped_pd)
+prepped_xform2 = pipeline2.transform(prepped_xform1)
+print("prepped_xform2 is",str(prepped_xform2))
+
+pred2 = loaded_model.predict(prepped_xform2, batch_size=BATCH_SIZE)
+print("pred2 is ",pred2)
+
+print("pred2[0] is ",pred2[0])
+print("pred2[0][0] is ",pred2[0][0])
 
 
 class ActionPredictDelay(Action):
