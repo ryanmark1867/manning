@@ -1,32 +1,4 @@
-# This files contains your custom actions which can be used to run
-# custom Python code.
-#
-# See this guide on how to implement these action:
-# https://rasa.com/docs/rasa/core/actions/#custom-actions/
-
-# this is the Python action file for streetcar delay prediction
-
-
-# This is a simple example for a custom action which utters "Hello World!"
-
-# from typing import Any, Text, Dict, List
-#
-# from rasa_sdk import Action, Tracker
-# from rasa_sdk.executor import CollectingDispatcher
-#
-#
-# class ActionHelloWorld(Action):
-#
-#     def name(self) -> Text:
-#         return "action_hello_world"
-#
-#     def run(self, dispatcher: CollectingDispatcher,
-#             tracker: Tracker,
-#             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
-#
-#         dispatcher.utter_message("Hello World!")
-#
-#         return []
+# This files contains the custom actions related to the Rasa model for the streetcar delay prediction project
 
 # common import block
 # common imports
@@ -84,15 +56,19 @@ from custom_classes import encode_categorical
 from custom_classes import prep_for_keras_input
 from custom_classes import fill_empty
 from custom_classes import encode_text
+from datetime import date
+from datetime import datetime
+import logging
 
 # main code block
 
-# 'https://raw.githubusercontent.com/ryanmark1867/chatbot/master/datasets/links_small.csv'
-# "https://github.com/ryanmark1867/chatbot/raw/master/images/thumb_up.jpg"
-# https://github.com/ryanmark1867/manning/blob/master/models/scmodeldec1.h5
+logging.getLogger().setLevel(logging.WARNING)
+logging.warning("logging check")
+
+# hardcoded paths for model and pipeline files
 
 # model_path = "https://github.com/ryanmark1867/manning/raw/master/models/scmodeldec1.h5"
-model_path = 'C:\personal\chatbot_july_2019\keras_models\scmodeldec1.h5'
+model_path = 'C:\personal\chatbot_july_2019\keras_models\scmodeldec27b_5.h5'
 pipeline2_path = 'C:\personal\chatbot_july_2019\streetcar_1\pipelines\sc_delay_pipeline_keras_prep_dec27b.pkl'
 
 pipeline1_path = 'C:\personal\chatbot_july_2019\streetcar_1\pipelines\sc_delay_pipeline_dec27b.pkl'
@@ -117,26 +93,53 @@ score_sample['day'] = np.array([1])
  #   'month': array([0, 1, 0, ..., 6, 2, 1]), 'year': array([5, 2, 3, ..., 1, 4, 3]), 'Direction': array([1, 1, 4, ..., 2, 3, 0]),
  #  'day': array([1, 2, 2, ..., 0, 1, 1])}
 
-#
-preds = loaded_model.predict(score_sample, batch_size=BATCH_SIZE)
-print("pred is ",preds)
+'''
+>>> from datetime import datetime
 
-print("preds[0] is ",preds[0])
-print("preds[0][0] is ",preds[0][0])
+>>> now = datetime.now()
+>>> now.day
+28
+>>> now.hour
+15
+>>> now.month
+12
+>>> now.weekday()
+5
+>>> 
+
+
+'''
+
+
+# dictionary of default values
+
+score_default['hour'] = 12
+score_default['Route'] = '501'
+score_default['daym'] = 1
+score_default['month'] = 1
+score_default['year'] = '2019'
+score_default['Direction'] = 'e'
+score_default['day'] = 2
+
+preds = loaded_model.predict(score_sample, batch_size=BATCH_SIZE)
+logging.warning("pred is "+str(preds))
+
+logging.warning("preds[0] is "+str(preds[0]))
+logging.warning("preds[0][0] is "+str(preds[0][0]))
 
 # example using pipeline on prepped data
 # routedirection_frame = pd.read_csv(path+"routedirection.csv")
 prepped_pd = pd.read_csv(prepped_data_path)
-print("prepped_pd is",str(prepped_pd))
+logging.warning("prepped_pd is"+str(prepped_pd))
 prepped_xform1 = pipeline1.transform(prepped_pd)
 prepped_xform2 = pipeline2.transform(prepped_xform1)
-print("prepped_xform2 is",str(prepped_xform2))
+logging.warning("prepped_xform2 is"+str(prepped_xform2))
 
 pred2 = loaded_model.predict(prepped_xform2, batch_size=BATCH_SIZE)
-print("pred2 is ",pred2)
+logging.warning("pred2 is "+str(pred2))
 
-print("pred2[0] is ",pred2[0])
-print("pred2[0][0] is ",pred2[0][0])
+logging.warning("pred2[0] is "+str(pred2[0]))
+logging.warning("pred2[0][0] is "+str(pred2[0][0]))
 
 
 class ActionPredictDelay(Action):
@@ -148,6 +151,29 @@ class ActionPredictDelay(Action):
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
         dispatcher.utter_message("in action_predict_delay")
+        if preds[0][0] >= 0.5:
+            predict_string = "yes"
+        else:
+            predict_string = "no"
+        dispatcher.utter_message("Delay prediction is:"+predict_string)
+
+        return []
+
+
+class ActionPredictDelayComplete(Action):
+    ''' predict delay when the user has provided sufficient content to make a prediction'''
+    def name(self) -> Text:
+        return "action_predict_delay"
+
+    def run(self, dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+        logging.warning("in action_predict_delay_complete")
+        now = datetime.now()
+        score_default['daym'] = now.day
+        score_default['month'] = now.month
+        score_default['year'] = now.year
+        score_default['day'] = now.weekday()
         if preds[0][0] >= 0.5:
             predict_string = "yes"
         else:

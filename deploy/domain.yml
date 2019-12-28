@@ -1,33 +1,67 @@
 intents:
   - greet
   - goodbye
-  - affirm
-  - deny
-  - mood_great
-  - mood_unhappy
   - predict_delay
+  - predict_delay_complete
+
+entities:
+- route
+- direction
+- hour
+- day
+- delta
+- scale
+
+slots:
+  route:
+    type: categorical
+    initial_value: 501
+    values:
+    - 501
+    - 502
+    - 503
+    - 504
+    - 505
+    - 506
+    - 508
+    - 509
+    - 510
+    - 511
+    - 512
+    - 301
+    - 304
+    - 306
+    - 310
+  direction:
+    type: categorical
+    initial_value: e
+    values:
+    - n
+    - e
+    - s
+    - w
+    - b
+  hour:
+    type: text
+  day:
+    type: text
+    initial_value: today
+  delta:
+    type: text
+    initial_value: 0
+  scale:
+    type: text
+
 
 actions:
 - utter_greet
-- utter_cheer_up
-- utter_did_that_help
-- utter_happy
 - utter_goodbye
 - action_predict_delay
+- action_predict_delay_complete
 
 templates:
   utter_greet:
   - text: "Hey! How are you?"
-
-  utter_cheer_up:
-  - text: "Here is something to cheer you up:"
-    image: "https://i.imgur.com/nGF1K8f.jpg"
-
-  utter_did_that_help:
-  - text: "Did that help you?"
-
-  utter_happy:
-  - text: "Great carry on!"
 
   utter_goodbye:
   - text: "Bye"
