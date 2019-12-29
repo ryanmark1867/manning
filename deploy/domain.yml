@@ -5,15 +5,15 @@ intents:
   - predict_delay_complete
 
 entities:
-- route
-- direction
+- Route
+- Direction
 - hour
 - day
 - delta
 - scale
 
 slots:
-  route:
+  Route:
     type: categorical
     initial_value: 501
     values:
@@ -32,7 +32,7 @@ slots:
     - 304
     - 306
     - 310
-  direction:
+  Direction:
     type: categorical
     initial_value: e
     values:
@@ -42,10 +42,67 @@ slots:
     - w
     - b
   hour:
-    type: text
+    type: categorical
+    initial_value: 12
+    values:
+    - 0
+    - 1
+    - 2
+    - 3
+    - 4
+    - 5
+    - 6
+    - 7
+    - 8
+    - 9
+    - 10
+    - 11
+    - 12
+    - 13
+    - 14
+    - 15
+    - 16
+    - 17
+    - 18
+    - 19
+    - 20
+    - 21
+    - 22
+    - 23
+  month:
+    type: categorical
+    initial_value: 1
+    values:
+    - 1
+    - 2
+    - 3
+    - 4
+    - 5
+    - 6
+    - 7
+    - 8
+    - 9
+    - 10
+    - 11
+    - 12
+  year:
+    type: categorical
+    initial_value: 2019
+    values:
+    - 2014
+    - 2015
+    - 2016
+    - 2017
+    - 2018
+    - 2019
+    - 2020
+    - 2021
+    - 2022
+    - 2023
   day:
     type: text
-    initial_value: today
+  daym:
+    type: text
   delta:
     type: text
     initial_value: 0

@@ -76,8 +76,9 @@ prepped_data_path = 'C:\personal\chatbot_july_2019\streetcar_1\input_sample_data
 
 loaded_model = load_model(model_path)
 loaded_model.summary()
-pipeline1 = load(open(pipeline1_path, 'rb'))
-pipeline2 = load(open(pipeline2_path, 'rb'))
+# moved pipeline definitions to custom action class
+#pipeline1 = load(open(pipeline1_path, 'rb'))
+#pipeline2 = load(open(pipeline2_path, 'rb'))
 BATCH_SIZE = 1000
 
 # brute force a scoring sample, bagged from test set
@@ -112,7 +113,7 @@ score_sample['day'] = np.array([1])
 
 
 # dictionary of default values
-
+score_default = {}
 score_default['hour'] = 12
 score_default['Route'] = '501'
 score_default['daym'] = 1
@@ -120,6 +121,14 @@ score_default['month'] = 1
 score_default['year'] = '2019'
 score_default['Direction'] = 'e'
 score_default['day'] = 2
+
+score_cols = ['Route','Direction','hour','year','month','daym','day']
+logging.warning("score_cols after define is "+str(score_cols))
+
+
+
+
+
 
 preds = loaded_model.predict(score_sample, batch_size=BATCH_SIZE)
 logging.warning("pred is "+str(preds))
@@ -131,6 +140,8 @@ logging.warning("preds[0][0] is "+str(preds[0][0]))
 # routedirection_frame = pd.read_csv(path+"routedirection.csv")
 prepped_pd = pd.read_csv(prepped_data_path)
 logging.warning("prepped_pd is"+str(prepped_pd))
+'''
+logging.warning("prepped_pd is"+str(prepped_pd))
 prepped_xform1 = pipeline1.transform(prepped_pd)
 prepped_xform2 = pipeline2.transform(prepped_xform1)
 logging.warning("prepped_xform2 is"+str(prepped_xform2))
@@ -140,7 +151,7 @@ logging.warning("pred2 is "+str(pred2))
 
 logging.warning("pred2[0] is "+str(pred2[0]))
 logging.warning("pred2[0][0] is "+str(pred2[0][0]))
-
+'''
 
 class ActionPredictDelay(Action):
 
@@ -163,21 +174,46 @@ class ActionPredictDelay(Action):
 class ActionPredictDelayComplete(Action):
     ''' predict delay when the user has provided sufficient content to make a prediction'''
     def name(self) -> Text:
-        return "action_predict_delay"
+        return "action_predict_delay_complete"
 
     def run(self, dispatcher: CollectingDispatcher,
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
         logging.warning("in action_predict_delay_complete")
+        # TODO brute force way to ensure pipeline doesn't get clogged
+        pipeline1 = load(open(pipeline1_path, 'rb'))
+        pipeline2 = load(open(pipeline2_path, 'rb'))
+        # init dictionary to hold scoring values
+        score_current = {}
         now = datetime.now()
         score_default['daym'] = now.day
         score_default['month'] = now.month
         score_default['year'] = now.year
         score_default['day'] = now.weekday()
-        if preds[0][0] >= 0.5:
-            predict_string = "yes"
+        logging.warning("score_cols is "+str(score_cols))
+        score_df = pd.DataFrame(columns=score_cols)
+        logging.warning("score_df before load is "+str(score_df))
+        # load the score_df
+        for col in score_cols:
+            if tracker.get_slot(col) != None:
+                # if the slot has been set in Rasa, use that value
+                if tracker.get_slot(col) == "today":
+                    logging.warning("GOT a TOday")
+                    score_df.at[0,col] = score_default[col]
+                score_df.at[0,col] = tracker.get_slot(col)
+            else:
+                # if the slot has not been set in Rasa, use the default value
+                score_df.at[0,col] = score_default[col]
+        logging.warning("score_df after load is "+str(score_df))
+        prepped_xform1 = pipeline1.transform(score_df)
+        prepped_xform2 = pipeline2.transform(prepped_xform1)
+        logging.warning("prepped_xform2 is"+str(prepped_xform2))
+        pred = loaded_model.predict(prepped_xform2, batch_size=BATCH_SIZE)
+        logging.warning("pred is "+str(pred))
+        if pred[0][0] >= 0.5:
+            predict_string = "yes, delay predicted"
         else:
-            predict_string = "no"
-        dispatcher.utter_message("Delay prediction is:"+predict_string)
+            predict_string = "no delay predicted"
+        dispatcher.utter_message("Delay prediction is: "+predict_string)
 
         return []
