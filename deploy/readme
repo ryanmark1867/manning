@@ -1,1 +1,29 @@
 files related to deployment of streetcar delay prediction model
+
+Deployment file structure:
+
+│   actions.py – main Python file containing Rasa custom action class where the trained Keras model is invoked
+│   config.yml – Rasa control file
+│   credentials.yml – Rasa file that includes the token used to define the callback webhook for Facebook Messenger
+│   custom_classes.py – Python file containing definitions for the classes that make up the pipeline
+│   domain.yml – Rasa file that defines the Rasa model’s key components: intents, entities, slots, and actions
+│   endpoints.yml – Rasa control file that specifies the URL for the action endpoint
+│
+├───data
+│       nlu.md- contains the utterance-level training examples for the Rasa model
+│       stories.md - contains the multi-utterance training examples for the Rasa model
+│
+├───input_sample_data
+│       prepped_dec27.csv – canned scoring example that has been hand-prepped
+│       raw_dec27.xlsx – canned scoring example
+│
+├───models
+│       20191207-201544.tar.gz – Rasa model
+│
+├───keras-models
+│       scmodeldec27b_5.h5 – Keras model
+│
+├───pipelines
+│       sc_delay_pipeline_dec27b.pkl – data preparation pipeline – part 1
+│       sc_delay_pipeline_keras_prep_dec27b.pkl – data preparation pipeline  - part 2
+
