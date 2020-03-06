@@ -1,6 +1,9 @@
 # manning
 repo for Manning book **Deep Learning with Structured Data** https://www.manning.com/books/deep-learning-with-structured-data
 
+## Note: 
+You can find an improved repo for the book, including many updates to the code and a simpler structure, at https://github.com/ryanmark1867/deep_learning_for_structured_data
+
 ## Note about  the current state of the code and upcoming improvements
 The code is being updated as the text of the book evolves. Here are some recommended improvements to the code that will be incorporated in future updates (post this review cycle):
 - clean up variable names
