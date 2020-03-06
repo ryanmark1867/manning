@@ -2,15 +2,8 @@
 repo for Manning book **Deep Learning with Structured Data** https://www.manning.com/books/deep-learning-with-structured-data
 
 ## Note: 
-You can find an improved repo for the book, including many updates to the code and a simpler structure, at https://github.com/ryanmark1867/deep_learning_for_structured_data
+You can find an improved repo for the book, including many updates to the code and a simpler structure, at https://github.com/ryanmark1867/deep_learning_for_structured_data. The old repo (whose readme you are reading now) will remain available, but all further updates to the code will be made to new, rationalized repo.
 
-## Note about  the current state of the code and upcoming improvements
-The code is being updated as the text of the book evolves. Here are some recommended improvements to the code that will be incorporated in future updates (post this review cycle):
-- clean up variable names
-- consider packaging with Docker to make exercising the code easier
-- consider including a random forest treatment of the problem to contrast with the performance and complexity of the DL solution
-- use Pandas chaining to make code cleaner
-- use regex in cleanup of locations
 
 ## Prequisites
 To run the code in this repo you will need access to an environment (such as Paperspace https://www.paperspace.com/ or Watson Studio Cloud https://cloud.ibm.com/catalog/services/watson-studio ) that supports Jupyter notebooks.
