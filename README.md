@@ -1,5 +1,5 @@
 # manning
-repo for Manning book **Deep Learning with Structured Data** https://www.manning.com/books/deep-learning-with-structured-data
+PLEASE NOTE - this is the DEPRECATED repo for Manning book **Deep Learning with Structured Data** https://www.manning.com/books/deep-learning-with-structured-data. It is no longer being maintained and it is made available for readers who have been following it from earlier version of the MEAP. Please use the current repo https://github.com/ryanmark1867/deep_learning_for_structured_data instead.
 
 ## Note: 
 You can find an improved repo for the book, including many updates to the code and a simpler structure, at https://github.com/ryanmark1867/deep_learning_for_structured_data. The old repo (whose readme you are reading now) will remain available, but all further updates to the code will be made to new, rationalized repo.
